@@ -3,6 +3,7 @@
 
 Так же можете пошагово установить сами Zabbix 7.2 на Ubuntum</br>
 Инструкция по установке Zabbix на Ubuntu 24.04</br>
+
 1.1 Обновление системы</br>
 Перед установкой Zabbix рекомендуется обновить список пакетов и установить все доступные обновления, чтобы избежать проблем с зависимостями.</br>
 <code>sudo apt update && sudo apt upgrade -y</code></br>
@@ -14,12 +15,12 @@ apt upgrade -y — автоматически устанавливает обн�
 Zabbix не включен в стандартные репозитории Ubuntu, поэтому его нужно скачать отдельно.</br>
 </br>
 Скачиваем официальный пакет репозитория Zabbix: </br>
-wget https://repo.zabbix.com/zabbix/7.2/release/ubuntu/pool/main/z/zabbix-release/zabbix-release_latest_7.2+ubuntu24.04_all.deb
+<code>wget https://repo.zabbix.com/zabbix/7.2/release/ubuntu/pool/main/z/zabbix-release/zabbix-release_latest_7.2+ubuntu24.04_all.deb</code>
 wget — утилита для загрузки файлов по URL.</br>
 Указываем ссылку на последний релиз репозитория Zabbix.</br>
 </br>
 Устанавливаем загруженный пакет:</br>
-sudo dpkg -i zabbix-release_latest_7.2+ubuntu24.04_all.deb</br>
+<code>sudo dpkg -i zabbix-release_latest_7.2+ubuntu24.04_all.deb</code></br>
 dpkg -i — устанавливает пакет в систему.</br>
 
 После установки репозитория обновляем список пакетов:</br>
@@ -27,7 +28,7 @@ sudo apt update</br>
 </br>
 1.3 Установка Zabbix сервера, веб-интерфейса и агента</br>
 Теперь устанавливаем основные компоненты Zabbix:</br>
-sudo apt install -y zabbix-server-mysql zabbix-frontend-php zabbix-apache-conf zabbix-sql-scripts zabbix-agent </br>
+<code>sudo apt install -y zabbix-server-mysql zabbix-frontend-php zabbix-apache-conf zabbix-sql-scripts zabbix-agent </code></br>
 zabbix-server-mysql — основной сервер Zabbix, использующий MySQL для хранения данных.</br>
 zabbix-frontend-php — веб-интерфейс Zabbix, написанный на PHP.</br>
 zabbix-apache-conf — конфигурация для веб-сервера Apache.</br>
@@ -36,16 +37,16 @@ zabbix-agent — агент Zabbix, собирающий данные с сер�
 </br>
 1.4 Установка MySQL</br>
 Устанавливаем сервер баз данных MySQL:</br>
-sudo apt-get install -y mysql-server</br>
+<code>sudo apt-get install -y mysql-server</code></br>
 mysql-server — пакет, содержащий сервер MySQL.</br>
 </br>
 Запускаем MySQL:</br>
-sudo systemctl start mysql</br>
-systemctl start mysql — запускает службу MySQL.</br>
+<code>sudo systemctl start mysql</code></br>
+<code>systemctl start mysql</code> — запускает службу MySQL.</br>
 </br>
 Дополнительные зависимости</br>
 Для корректной работы Zabbix также необходимо установить несколько утилит:</br>
-sudo apt install -y wget apt-transport-https ca-certificates gnupg curl</br>
+<code>sudo apt install -y wget apt-transport-https ca-certificates gnupg curl</code></br>
 wget — инструмент для загрузки файлов.</br>
 apt-transport-https — поддержка HTTPS в apt.</br>
 ca-certificates — сертификаты безопасности для HTTPS.</br>
@@ -56,7 +57,7 @@ curl — инструмент для загрузки данных через HT
 Теперь создадим базу данных и пользователя для Zabbix.</br>
 
 Запускаем MySQL:</br>
-sudo mysql</br>
+<code>sudo mysql</code></br>
 Создаем базу данных:</br>
 CREATE DATABASE zabbix CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;</br>
 Создаем пользователя и задаем пароль (замените МойПароль на свой пароль):</br>
@@ -78,12 +79,12 @@ EXIT;</br>
 Теперь необходимо загрузить в MySQL структуру таблиц Zabbix.</br>
 </br>
 Выполняем импорт SQL-скрипта (если запросят пароль, введите МойПароль):</br>
-zcat /usr/share/zabbix/sql-scripts/mysql/server.sql.gz | mysql --default-character-set=utf8mb4 -uzabbix -p zabbix</br>
+<code>zcat /usr/share/zabbix/sql-scripts/mysql/server.sql.gz | mysql --default-character-set=utf8mb4 -uzabbix -p zabbix</code></br>
 zcat — распаковывает сжатый SQL-файл.</br>
-mysql -uzabbix -p — запускает MySQL от имени пользователя zabbix и запрашивает пароль.</br>
+<code>mysql -uzabbix -p</code> — запускает MySQL от имени пользователя zabbix и запрашивает пароль.</br>
 </br>
 После успешного импорта снова заходим в MySQL:</br>
-sudo mysql</br>
+<code>sudo mysql</code></br>
 </br>
 Отключаем функцию создания пользователей:</br>
 SET GLOBAL log_bin_trust_function_creators = 0;</br>
@@ -94,7 +95,7 @@ EXIT;</br>
 Теперь нужно прописать пароль базы данных в конфигурационном файле Zabbix.</br>
 </br>
 Открываем файл в редакторе:</br>
-sudo nano /etc/zabbix/zabbix_server.conf</br>
+<code>sudo nano /etc/zabbix/zabbix_server.conf</code></br>
 </br>
 Находим строку:</br>
 # DBPassword=</br>
@@ -105,10 +106,10 @@ DBPassword=МойПароль</br>
 1.8 Перезапуск сервисов Zabbix</br>
 После всех настроек необходимо перезапустить службы Zabbix и веб-сервера Apache:</br>
 </br>
-sudo systemctl restart zabbix-server zabbix-agent apache2</br>
+<code>sudo systemctl restart zabbix-server zabbix-agent apache2</code></br>
 Добавляем их в автозапуск, чтобы они запускались при старте системы:</br>
 </br>
-sudo systemctl enable zabbix-server zabbix-agent apache2</br>
+<code>sudo systemctl enable zabbix-server zabbix-agent apache2</code></br>
 </br>
 
 1.9 Доступ к веб-интерфейсу Zabbix</br>
