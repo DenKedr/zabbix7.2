@@ -96,7 +96,7 @@ zcat — распаковывает сжатый SQL-файл.</br>
 <code>sudo nano /etc/zabbix/zabbix_server.conf</code></br>
 </br>
 Находим строку:</br>
-# DBPassword=</br>
+<code># DBPassword=</br>
 Заменяем ее на:</br>
 DBPassword=МойПароль</br>
 Сохраняем изменения (Ctrl + X → Y → Enter).</br>
