@@ -1,4 +1,4 @@
-Выложил готовый скрипт по установке</br>
+Выложил готовый скрипт по установки</br>
 Добавлена строка read -s db_password, которая запрашивает у пользователя пароль для базы данных (флаг -s скрывает ввод).
 Для установки введите команду </br>
 <code>wget -O zabbix7.2.sh https://raw.githubusercontent.com/DenKedr/zabbix7.2/main/zabbix7.2.sh && chmod +x zabbix7.2.sh && sudo ./zabbix7.2.sh</code>
