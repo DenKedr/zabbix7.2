@@ -3,11 +3,11 @@
 
 Так же можете пошагово установить сами Zabbix 7.2 на Ubuntum</br>
 Инструкция по установке Zabbix на Ubuntu 24.04</br>
-
+</br>
 1.1 Обновление системы</br>
 Перед установкой Zabbix рекомендуется обновить список пакетов и установить все доступные обновления, чтобы избежать проблем с зависимостями.</br>
 <code>sudo apt update && sudo apt upgrade -y</code></br>
-</br>
+</br></br>
 apt update — обновляет список доступных пакетов в системе.</br>
 apt upgrade -y — автоматически устанавливает обновления для всех пакетов.
 </br></br>
@@ -55,26 +55,24 @@ curl — инструмент для загрузки данных через HT
 </br></br>
 1.5 Создание базы данных для Zabbix</br>
 Теперь создадим базу данных и пользователя для Zabbix.</br>
-
 Запускаем MySQL:</br>
-<code>sudo mysql</code></br>
+<code>sudo mysql</code></code></br>
 Создаем базу данных:</br>
-CREATE DATABASE zabbix CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;</br>
+<code>CREATE DATABASE zabbix CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;</code></br>
 Создаем пользователя и задаем пароль (замените МойПароль на свой пароль):</br>
 </br>
-CREATE USER 'zabbix'@'localhost' IDENTIFIED BY 'МойПароль';</br>
+<code>CREATE USER 'zabbix'@'localhost' IDENTIFIED BY 'МойПароль';</code></br>
 Выдаем пользователю zabbix полные права на базу данных zabbix:</br>
 </br>
-GRANT ALL PRIVILEGES ON zabbix.* TO 'zabbix'@'localhost';</br>
+<code>GRANT ALL PRIVILEGES ON zabbix.* TO 'zabbix'@'localhost';</code></br>
 Включаем поддержку функций в базе данных:</br>
 </br>
-SET GLOBAL log_bin_trust_function_creators = 1;</br>
+<code>SET GLOBAL log_bin_trust_function_creators = 1;</code></br>
 Выходим из MySQL:</br>
 </br>
-EXIT;</br>
+<code>EXIT;</code></br>
 Выходим из БД</br>
-</br>
-
+</br></br>
 1.6 Импорт схемы базы данных Zabbix</br>
 Теперь необходимо загрузить в MySQL структуру таблиц Zabbix.</br>
 </br>
@@ -87,8 +85,8 @@ zcat — распаковывает сжатый SQL-файл.</br>
 <code>sudo mysql</code></br>
 </br>
 Отключаем функцию создания пользователей:</br>
-SET GLOBAL log_bin_trust_function_creators = 0;</br>
-EXIT;</br>
+<code>SET GLOBAL log_bin_trust_function_creators = 0;</code></br>
+<code>EXIT;</code></br>
 </br>
 
 1.7 Настройка Zabbix</br>
@@ -102,7 +100,7 @@ EXIT;</br>
 Заменяем ее на:</br>
 DBPassword=МойПароль</br>
 Сохраняем изменения (Ctrl + X → Y → Enter).</br>
-</br>
+</br></br>
 1.8 Перезапуск сервисов Zabbix</br>
 После всех настроек необходимо перезапустить службы Zabbix и веб-сервера Apache:</br>
 </br>
@@ -110,8 +108,7 @@ DBPassword=МойПароль</br>
 Добавляем их в автозапуск, чтобы они запускались при старте системы:</br>
 </br>
 <code>sudo systemctl enable zabbix-server zabbix-agent apache2</code></br>
-</br>
-
+</br></br>
 1.9 Доступ к веб-интерфейсу Zabbix</br>
 После успешной установки и настройки веб-интерфейс Zabbix будет доступен в браузере по адресу:</br>
 </br>
